@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a responsive pricing table.">
+    <title>Chefugee Donations</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-"
+        crossorigin="anonymous">
+
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css">
+    <link rel="stylesheet" href="https://purecss.io/css/bootstrap/modal.css">
+    <!--<![endif]-->
+
+
+    <!--[if lte IE 8]>
+            <link rel="stylesheet" href="css/layouts/pricing-old-ie.css">
+        <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="css/layouts/pricing.css">
+    <!--<![endif]-->
+
+    <script src="https://js.stripe.com/v3"></script>
+</head>
+
+<body>
+
+    <div class="pure-menu pure-menu-horizontal">
+        <a href="#" class="pure-menu-heading"><img src="imgs/logo.png" height="50px" alt="logo"></a>
+    </div>
+
+    <div class="l-content">
+        <div class="pricing-tables pure-g">
+            <div class="pure-u-1 pure-u-md-1-4">
+                <div class="pricing-table pricing-table-free">
+                    <div class="pricing-table-header">
+                        <h2>Colaborar</h2>
+
+                        <span class="pricing-table-price">
+                            5€ <span>al mes</span>
+                        </span>
+                    </div>
+
+                    <button class="button-choose pure-button checkout-button" style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
+                        data-plan="plan_FX1YVNhU8PLLMm" role="link">
+                        Colaborar
+                    </button>
+                </div>
+            </div>
+
+            <div class="pure-u-1 pure-u-md-1-4">
+                <div class="pricing-table pricing-table-biz pricing-table-selected">
+                    <div class="pricing-table-header">
+                        <h2>Colaborar</h2>
+
+                        <span class="pricing-table-price">
+                            15€ <span>al mes</span>
+                        </span>
+                    </div>
+
+                    <button class="button-choose pure-button checkout-button"
+                        style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
+                        data-plan="plan_FX1ZpCes0xQmOC" role="link">
+                        Colaborar
+                    </button>
+                </div>
+            </div>
+
+            <div class="pure-u-1 pure-u-md-1-4">
+                <div class="pricing-table pricing-table-enterprise">
+                    <div class="pricing-table-header">
+                        <h2>Colaborar</h2>
+
+                        <span class="pricing-table-price">
+                            25€ <span>al mes</span>
+                        </span>
+                    </div>
+
+                    <button class="button-choose pure-button checkout-button"
+                        style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
+                        data-plan="plan_FX1ZlsdFaN6VeQ" role="link">
+                        Colaborar
+                    </button>
+                </div>
+            </div>
+
+            <div class="pure-u-1 pure-u-md-1-4">
+                <div class="pricing-table pricing-table-enterprise">
+                    <div class="pricing-table-header">
+                        <h2>Donar una ves</h2>
+
+                        <span class="pricing-table-price">
+                            € <span>una vez</span>
+                        </span>
+                    </div>
+
+
+                    <div id="donateModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel" aria-hidden="true">
+                        <div class="modal-body">
+
+                            <form class="pure-form pure-form-stacked">
+                                <legend>¿Cuanto te gustaria donar?</legend>
+                                <input id="amount-input" type="number" value="1" autocomplete="off" style="display: inline-block; margin-right: 3px"><span>€</span>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="pure-button" data-dismiss="modal" aria-hidden="true">Close</button>
+                            <button class="pure-button"
+                                style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
+                                id="donate-button" data-product="sku_FX2E9V5Vd3Lw4W" role="link">
+                                donar
+                            </button>
+                            <script>
+                                var stripe = Stripe('pk_test_9FDaC8hHYtYq1TZofOsex08h00MUpRpbLx');
+
+                                var donateButton = document.getElementById('donate-button');
+                                donateButton.addEventListener('click', function () {
+                                    var targetElement = event.target || event.srcElement;
+                                    // When the customer clicks on the button, redirect
+                                    // them to Checkout.
+                                    stripe.redirectToCheckout({
+                                        items: [{ sku: targetElement.dataset.product, quantity: parseInt(document.getElementById('amount-input').value) }],
+
+                                        // Do not rely on the redirect to the successUrl for fulfilling
+                                        // purchases, customers may not always reach the success_url after
+                                        // a successful payment.
+                                        // Instead use one of the strategies described in
+                                        // https://stripe.com/docs/payments/checkout/fulfillment
+                                        successUrl: 'https://donations.chefugee.org?success=true',
+                                        cancelUrl: 'https://donations.chefugee.org',
+                                    })
+                                        .then(function (result) {
+                                            if (result.error) {
+                                                // If `redirectToCheckout` fails due to a browser or network
+                                                // error, display the localized error message to your customer.
+                                                var displayError = document.getElementById('error-message');
+                                                displayError.textContent = result.error.message;
+                                            }
+                                        });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <a href="#donateModal" role="button" class="button-choose pure-button" data-toggle="modal">
+                        donar
+                    </a>
+
+                </div>
+            </div>
+        </div> <!-- end pricing-tables -->
+        <div id="thankyouModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="thankyouModalLabel"
+            aria-hidden="true">
+            <div class="modal-header">
+                <h1 id="thankyouModalLabel">Gracias por tu donación!!</h1>
+            </div>
+            <div class="modal-body">
+                <p>Hemos recibido el pago correctamente. Si elegiste colaborar con nostros y en cualquier momento necesitas cambiar la cantitad, puedes escribirnos a food@chefugee.org</p>
+            </div>
+
+            <div class="modal-footer">
+                <button class="pure-button" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+
+    </div> <!-- end l-content -->
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script>
+        var stripe = Stripe('pk_test_9FDaC8hHYtYq1TZofOsex08h00MUpRpbLx');
+
+        var checkoutButtons = document.getElementsByClassName('checkout-button')
+        for (var i = 0; i < checkoutButtons.length; i++) {
+            checkoutButtons[i].addEventListener('click', function (event) {
+                var targetElement = event.target || event.srcElement;
+                // When the customer clicks on the button, redirect
+                // them to Checkout.
+                stripe.redirectToCheckout({
+                    items: [{ plan: targetElement.dataset.plan, quantity: 1 }],
+
+                    // Do not rely on the redirect to the successUrl for fulfilling
+                    // purchases, customers may not always reach the success_url after
+                    // a successful payment.
+                    // Instead use one of the strategies described in
+                    // https://stripe.com/docs/payments/checkout/fulfillment
+                    successUrl: 'https://donations.chefugee.org?success=true',
+                    cancelUrl: 'https://donations.chefugee.org',
+                })
+                    .then(function (result) {
+                        if (result.error) {
+                            // If `redirectToCheckout` fails due to a browser or network
+                            // error, display the localized error message to your customer.
+                            var displayError = document.getElementById('error-message');
+                            displayError.textContent = result.error.message;
+                        }
+                    });
+            });
+        }
+
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+
+        function getUrlParam(parameter, defaultvalue) {
+            var urlparameter = defaultvalue;
+            if (window.location.href.indexOf(parameter) > -1) {
+                urlparameter = getUrlVars()[parameter];
+            }
+            return urlparameter;
+        }
+        var success = getUrlParam('success')
+        if (success == 'true') {
+            $("#thankyouModal").modal()
+        }
+
+    </script>
+</body>
+
+</html>
