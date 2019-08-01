@@ -1,0 +1,52 @@
+body{
+    font-family: 'Roboto' !important
+}
+.pure-menu {
+    text-align: center;
+    height: 10vh;
+}
+.pricing-tables{
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+.pricing-table {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
+    cursor: pointer;
+}
+
+
+.button-choose {
+    background-color: #2b90e9;
+    color: #FFF;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 4px;
+    font-size: 1em;
+    position: relative;
+    bottom: -1.5em;
+    transition: 0.3s
+}
+.button-choose:hover{
+    background-color: #2b89e9;
+}
+
+.pricing-table-header.-a{
+    background-color: #2B90E9
+}
+
+.pricing-table-header.-b{
+    background-color: #00A2A7
+}
+
+.pricing-table-header.-c{
+    background-color: #E25151
+}
+
+.pricing-table-header.-d{
+    background-color: #EE9C17
+}
