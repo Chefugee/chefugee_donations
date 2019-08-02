@@ -111,6 +111,7 @@
         <div style="margin: 0 auto; width: 300px; text-align: center;" id="error-message"></div>
         <div id="donateModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel"
             aria-hidden="true">
+
             <div class="modal-body">
 
                 <form class="pure-form pure-form-stacked">
@@ -128,7 +129,8 @@
                     var stripe = Stripe('pk_live_m3HxbTrPdllNXdFtso9NwDgf00ZZPxj21S');
 
                     var donateButton = document.getElementById('donate-button');
-                    donateButton.addEventListener('click', function () {
+                    donateButton.addEventListener('click', function (event) {
+                        event.preventDefault();
                         var targetElement = event.target || event.srcElement;
                         // When the customer clicks on the button, redirect
                         // them to Checkout.
@@ -146,6 +148,7 @@
                             cancelUrl: 'https://donations.chefugee.org?cancel=true',
                         })
                             .then(function (result) {
+                                alert(result)
                                 if (result.error) {
                                     // If `redirectToCheckout` fails due to a browser or network
                                     // error, display the localized error message to your customer.

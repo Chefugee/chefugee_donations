@@ -17,7 +17,7 @@ body{
 }
 .pure-menu {
     text-align: center;
-    height: 10vh;
+    height: 17vh;
 }
 .pricing-tables{
     height: 90vh;
@@ -32,7 +32,7 @@ body{
     box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
     opacity: 0;
     animation: fadeIn 0.5s ease-in-out forwards
-}   
+}
 
 .button-choose {
     background-color: #2b90e9;
