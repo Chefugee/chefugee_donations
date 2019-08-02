@@ -101,54 +101,6 @@
                         </span>
                     </div>
 
-
-                    <div id="donateModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel" aria-hidden="true">
-                        <div class="modal-body">
-
-                            <form class="pure-form pure-form-stacked">
-                                <legend>¿Cuanto te gustaria donar?</legend>
-                                <input id="amount-input" type="number" value="1" autocomplete="off" style="display: inline-block; margin-right: 3px"><span>€</span>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button class="pure-button" data-dismiss="modal" aria-hidden="true">Close</button>
-                            <button class="pure-button"
-                                id="donate-button" data-product="sku_FXNMGG322S5Kmc" role="link">
-                                donar
-                            </button>
-                            <script>
-                                var stripe = Stripe('pk_live_m3HxbTrPdllNXdFtso9NwDgf00ZZPxj21S');
-
-                                var donateButton = document.getElementById('donate-button');
-                                donateButton.addEventListener('click', function () {
-                                    var targetElement = event.target || event.srcElement;
-                                    // When the customer clicks on the button, redirect
-                                    // them to Checkout.
-                                    stripe.redirectToCheckout({
-                                        items: [{ sku: targetElement.dataset.product, quantity: parseInt(document.getElementById('amount-input').value) }],
-                                        locale: 'es',
-                                        submitType: 'donate',
-
-                                        // Do not rely on the redirect to the successUrl for fulfilling
-                                        // purchases, customers may not always reach the success_url after
-                                        // a successful payment.
-                                        // Instead use one of the strategies described in
-                                        // https://stripe.com/docs/payments/checkout/fulfillment
-                                        successUrl: 'https://donations.chefugee.org?success=true',
-                                        cancelUrl: 'https://donations.chefugee.org?cancel=true',
-                                    })
-                                        .then(function (result) {
-                                            if (result.error) {
-                                                // If `redirectToCheckout` fails due to a browser or network
-                                                // error, display the localized error message to your customer.
-                                                var displayError = document.getElementById('error-message');
-                                                displayError.textContent = result.error.message;
-                                            }
-                                        });
-                                });
-                            </script>
-                        </div>
-                    </div>
                     <a href="#donateModal" role="button" class="button-choose pure-button" data-toggle="modal">
                         donar
                     </a>
@@ -157,6 +109,54 @@
             </div>
         </div> <!-- end pricing-tables -->
         <div style="margin: 0 auto; width: 300px; text-align: center;" id="error-message"></div>
+        <div id="donateModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="donateModalLabel"
+            aria-hidden="true">
+            <div class="modal-body">
+
+                <form class="pure-form pure-form-stacked">
+                    <legend>¿Cuanto te gustaria donar?</legend>
+                    <input id="amount-input" type="number" value="1" autocomplete="off"
+                        style="display: inline-block; margin-right: 3px"><span>€</span>
+            </div>
+
+            <div class="modal-footer">
+                <button class="pure-button" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="pure-button" id="donate-button" data-product="sku_FXNMGG322S5Kmc" role="link">
+                    donar
+                </button>
+                <script>
+                    var stripe = Stripe('pk_live_m3HxbTrPdllNXdFtso9NwDgf00ZZPxj21S');
+
+                    var donateButton = document.getElementById('donate-button');
+                    donateButton.addEventListener('click', function () {
+                        var targetElement = event.target || event.srcElement;
+                        // When the customer clicks on the button, redirect
+                        // them to Checkout.
+                        stripe.redirectToCheckout({
+                            items: [{ sku: targetElement.dataset.product, quantity: parseInt(document.getElementById('amount-input').value) }],
+                            locale: 'es',
+                            submitType: 'donate',
+
+                            // Do not rely on the redirect to the successUrl for fulfilling
+                            // purchases, customers may not always reach the success_url after
+                            // a successful payment.
+                            // Instead use one of the strategies described in
+                            // https://stripe.com/docs/payments/checkout/fulfillment
+                            successUrl: 'https://donations.chefugee.org?success=true',
+                            cancelUrl: 'https://donations.chefugee.org?cancel=true',
+                        })
+                            .then(function (result) {
+                                if (result.error) {
+                                    // If `redirectToCheckout` fails due to a browser or network
+                                    // error, display the localized error message to your customer.
+                                    var displayError = document.getElementById('error-message');
+                                    displayError.textContent = result.error.message;
+                                }
+                            });
+                    });
+                </script>
+            </div>
+        </div>
         <div id="thankyouModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="thankyouModalLabel"
             aria-hidden="true">
             <div class="modal-header">
