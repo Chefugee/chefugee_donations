@@ -79,3 +79,8 @@ body{
         margin: 0 1em 2em;
     }
 }
+
+.modal {
+    width: 80%;
+    margin-left: -40%;
+}
