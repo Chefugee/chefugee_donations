@@ -20,7 +20,7 @@ body{
     height: 10vh;
 }
 .pricing-tables{
-    height: 90vh;
+    height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
