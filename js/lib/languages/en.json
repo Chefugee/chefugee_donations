@@ -1,0 +1,10 @@
+{
+    "message-thankyou": "Thanks for your generosity! If you want to change the amount of future donations or cancel your monthly donation, please write to food@chefugee.com",
+    "message-bankaccount": "You can also send a a bank transfer to ",
+    "text-recurring": "Recurring",
+    "text-monthly": "monthly",
+    "text-once": "now",
+    "text-onetime-donations": "Donate a fixed amount",
+    "text-howmuch": "How much would you like to donate?",
+    "text-donate": "donate"
+}
