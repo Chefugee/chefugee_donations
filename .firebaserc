@@ -1,5 +1,6 @@
 {
   "projects": {
-    "production": "chefugee-donations"
+    "production": "chefugee-donations",
+    "default": "chefugee-donations"
   }
 }
