@@ -154,7 +154,7 @@
             // them to Checkout.
             stripe.redirectToCheckout({
                 items: [{ sku: targetElement.dataset.product, quantity: parseInt(document.getElementById('amount-input').value) }],
-                locale: 'es',
+                locale: navigator.language,
                 submitType: 'donate',
 
                 // Do not rely on the redirect to the successUrl for fulfilling
